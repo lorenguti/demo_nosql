@@ -1,0 +1,106 @@
+<clickhouse>
+<path>./</path>
+    <logger>
+        <level>debug</level>
+        <log>/Users/lorgutierrez/demo/c2/log/clickhouse-server.log</log>
+        <errorlog>/Users/lorgutierrez/demo/c2/log/clickhouse-server.err.log</errorlog>
+        <size>1000M</size>
+        <count>3</count>
+    </logger>
+    <display_name>cluster_1S_2R node 2</display_name>
+    <listen_host>0.0.0.0</listen_host>
+    <http_port>8124</http_port>
+    <interserver_http_port>9999</interserver_http_port>
+    <tcp_port>9001</tcp_port>
+    <macros>
+        <shard>01</shard>
+        <replica>repl2</replica>
+    </macros>
+    <users>
+        <default>
+            <password/>
+
+            <networks>
+                <ip>::/0</ip>
+            </networks>
+
+            <profile>default</profile>
+            <quota>default</quota>
+
+            <access_management>1</access_management>
+            <named_collection_control>1</named_collection_control>
+        </default>
+    </users>
+    <profiles>
+        <default/>
+    </profiles>
+
+    <quotas>
+        <default/>
+    </quotas>
+    <keeper_server>
+        <tcp_port>9181</tcp_port>
+        <server_id>2</server_id>
+        <log_storage_path>/Users/lorgutierrez/demo/c2/coordination/log</log_storage_path>
+        <snapshot_storage_path>/Users/lorgutierrez/demo/c2/coordination/snapshots</snapshot_storage_path>
+        <coordination_settings>
+            <operation_timeout_ms>10000</operation_timeout_ms>
+            <session_timeout_ms>30000</session_timeout_ms>
+        </coordination_settings>
+        <raft_configuration>
+            <server>
+                <id>1</id>
+                <hostname>127.0.0.1</hostname>
+                <port>9091</port>
+            </server>
+            <server>
+                <id>2</id>
+                <hostname>127.0.0.1</hostname>
+                <port>9092</port>
+            </server>
+        </raft_configuration>
+    </keeper_server>
+    <remote_servers replace="true">
+        <my_cluster>
+        <secret>mysecretphrase</secret>
+            <shard>
+            <internal_replication>true</internal_replication>
+                <replica>
+                    <host>127.0.0.1</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>127.0.0.1</host>
+                    <port>9001</port>
+                </replica>
+            </shard>
+        </my_cluster>
+    </remote_servers>
+
+    <distributed_ddl>
+        <path>/clickhouse/task_queue/ddl</path>
+    </distributed_ddl>
+
+    <auxiliary_zookeepers>
+    <zookeeper2>
+        <node>
+            <host>127.0.0.1</host>
+            <port>9093</port>
+        </node>
+        <node>
+            <host>127.0.0.1</host>
+            <port>9094</port>
+        </node>
+        <node>
+            <host>127.0.0.1</host>
+            <port>9095</port>
+        </node>
+    </zookeeper2>
+    <zookeeper3>
+        <node>
+            <host>127.0.0.1</host>
+            <port>9096</port>
+        </node>
+    </zookeeper3>
+</auxiliary_zookeepers>
+</clickhouse>
